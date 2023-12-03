@@ -6,13 +6,71 @@ export const db = new Surreal();
 export const session = writable({
 	email: '',
     first_name: '',
-    last_name: ''
+    last_name: '',
+    id: '',
 });
 
 export async function usedb() {
-    await db.connect('http://127.0.0.1:8000/rpc');
+    await db.connect('http://187.208.92.45:8000/rpc');
     await db.use({ namespace: 'test', database: 'test' });
     await db.wait();
+}
+
+export async function update_user(email, old_pass, password, first_name, last_name) {
+    
+        // Connect to the databasex
+        await usedb();
+        let res = await connect(email, old_pass);
+        let id = get(session).id;
+
+        if (!res) {
+            console.log('Wrong password');
+            await db.authenticate(localStorage.getItem('token_auth'));
+            return false;
+        }
+
+        if (password != "") {   
+            await db.query("UPDATE $id SET pass = $pass", {
+                id: id,
+                pass: password,
+            });
+        }
+
+        if (first_name != "") {   
+            await db.query("UPDATE $id SET first_name = $first_name", {
+                id: id,
+                first_name: first_name
+            });
+        }
+
+        if (last_name != "") {
+            await db.query("UPDATE $id SET last_name = $last_name", {
+                id: id,
+                last_name: last_name
+            });
+        }
+
+        if (email != "") {
+            await db.query("UPDATE $id SET email = $email", {
+                id: id,
+                email: email
+            });
+        }
+
+        const usuario = await db.info();
+        session.update((old) => {
+            old.email = usuario.email;
+            old.first_name = usuario.first_name;
+            old.last_name = usuario.last_name;
+            old.id = usuario.id;
+            return old;
+        });
+
+        console.log('Updated user');
+        console.log('User: ', usuario.email);
+
+        return true;
+    
 }
 
 export async function create_user(user, email, password, first_name, last_name) {
@@ -40,6 +98,7 @@ export async function create_user(user, email, password, first_name, last_name) 
             old.email = usuario.email;
             old.first_name = usuario.first_name;
             old.last_name = usuario.last_name;
+            old.id = usuario.id;
             return old;
         });
 
@@ -72,6 +131,7 @@ export async function connect(email, password) {
                 old.email = usuario.email;
                 old.first_name = usuario.first_name;
                 old.last_name = usuario.last_name;
+                old.id = usuario.id;
                 return old;
             });
 
@@ -91,6 +151,7 @@ export async function connect(email, password) {
                 old.email = usuario.email;
                 old.first_name = usuario.first_name;
                 old.last_name = usuario.last_name;
+                old.id = usuario.id;
                 return old;
             });
     

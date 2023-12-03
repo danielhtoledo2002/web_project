@@ -2,7 +2,7 @@
 <script>
     import NavBar from "../navBar.svelte";
     import { onMount } from "svelte";
-    import { db, session, connect } from "$lib/session.js";
+    import { db, session, connect, update_user } from "$lib/session.js";
     import { get } from "svelte/store";
 
     let nombre = "";
@@ -21,9 +21,26 @@
         }
     });
 
-    function actualizar() {
-        
+    async function actualizar() {
+        let password = document.getElementById("password").value;
+        let old_pass = document.getElementById("password").value;
+        let first_name = document.getElementById("user_1").value;
+        let last_name = document.getElementById("user_2").value;
+        let email = document.getElementById("email").value;
+        let new_pass = document.getElementById("new-password").value;
 
+        if (password == "") {
+            alert("Por favor, rellene todos los campos");
+        } else {
+            let success = await update_user(email, old_pass, new_pass, first_name, last_name);
+
+            if (!success) {
+                alert("Contraseña incorrecta");
+                return;
+            } else {
+                window.location.href = "/user";
+            }
+        }
         
     }
 </script>
