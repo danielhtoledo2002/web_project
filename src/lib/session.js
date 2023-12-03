@@ -16,18 +16,13 @@ export async function usedb() {
     await db.wait();
 }
 
-export async function update_user(email, old_pass, password, first_name, last_name) {
+export async function update_user(email, password, first_name, last_name) {
     
         // Connect to the databasex
         await usedb();
-        let res = await connect(email, old_pass);
-        let id = get(session).id;
+        await connect("", "");
 
-        if (!res) {
-            console.log('Wrong password');
-            await db.authenticate(localStorage.getItem('token_auth'));
-            return false;
-        }
+        let id = get(session).id;
 
         if (password != "") {   
             await db.query("UPDATE $id SET pass = crypto::argon2::generate($pass)", {
@@ -36,23 +31,20 @@ export async function update_user(email, old_pass, password, first_name, last_na
             });
         }
 
-        if (first_name != "") {   
-            await db.query("UPDATE $id SET first_name = $first_name", {
-                id: id,
+        if (first_name != "") {  
+            await db.merge(id, {
                 first_name: first_name
-            });
+            }); 
         }
 
         if (last_name != "") {
-            await db.query("UPDATE $id SET last_name = $last_name", {
-                id: id,
+            await db.merge(id, {
                 last_name: last_name
             });
         }
 
         if (email != "") {
-            await db.query("UPDATE $id SET email = $email", {
-                id: id,
+            await db.merge(id, {
                 email: email
             });
         }
