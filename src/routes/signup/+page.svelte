@@ -30,7 +30,7 @@
             let success = await create_user(user, email, password, nombre, apellido);
 
             if (!success) {
-                alert("Usuario o contraseña incorrectos");
+                alert("Fallo al crear el usuario. Verifique que el correo o el usuario no esten en uso");
                 return;
             }
 
@@ -40,7 +40,7 @@
                 window.location.href = '/listas';
             } catch (err) {
                 console.log(err);
-                alert("Usuario o contraseña incorrectos");
+                alert("Fallo al crear el usuario. Verifique que el correo o el usuario no esten en uso");
                 //window.location.href = '/login';
             }
         }

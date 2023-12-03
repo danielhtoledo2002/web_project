@@ -36,11 +36,6 @@ DEFINE FIELD id ON user PERMISSIONS
 DEFINE FIELD first_name ON TABLE user TYPE string;
 DEFINE FIELD last_name ON TABLE user TYPE string;
 
-
-DEFINE FUNCTION fn::is_following($user: record(user)) {
-    RETURN (SELECT VALUE count(out) FROM ($auth.id->follow) WHERE out=$user)[0] = 1;
-};
-
 -- 1. Solo es accessible para el dueño de la cuenta
 -- 2. El email no puede ser nulo y debe ser valido
 DEFINE FIELD email ON TABLE user TYPE string
@@ -49,6 +44,7 @@ DEFINE FIELD email ON TABLE user TYPE string
     ASSERT 
         $value != NONE AND string::is::email($value)
 ;
+DEFINE INDEX userEmailIndex ON TABLE user COLUMNS email UNIQUE;
 
 -- La contraseña puede ser actualizada por el usuario pero no vista
 DEFINE FIELD pass ON TABLE user PERMISSIONS FOR select NONE;
