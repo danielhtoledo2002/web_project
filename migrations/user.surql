@@ -30,6 +30,7 @@ DEFINE TABLE user SCHEMAFULL
 DEFINE FIELD id ON user PERMISSIONS 
     FOR create, update, delete NONE
     FOR select FULL
+    TYPE record(user)
 ;
 
 -- Define first_name and last_name
@@ -47,5 +48,5 @@ DEFINE FIELD email ON TABLE user TYPE string
 DEFINE INDEX userEmailIndex ON TABLE user COLUMNS email UNIQUE;
 
 -- La contraseña puede ser actualizada por el usuario pero no vista
-DEFINE FIELD pass ON TABLE user PERMISSIONS FOR select NONE;
+DEFINE FIELD pass ON TABLE user PERMISSIONS FOR select NONE TYPE string;
 
