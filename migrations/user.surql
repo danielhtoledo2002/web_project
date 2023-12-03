@@ -63,13 +63,14 @@ DEFINE FIELD owner ON TABLE task_list TYPE record(user);
 
 -- El nombre de la lista no puede ser nulo
 DEFINE FIELD name ON TABLE task_list TYPE string ASSERT $value != NONE;
+DEFINE FIELD description ON TABLE task_list TYPE string;
 
 -- Cuando se crea un usuario se crea una lista de tareas por defecto llamada "K-List"
 DEFINE EVENT create_degaule_task_list ON user WHEN $event = "CREATE" THEN {
     LET $user = $after.id;
-    LET $new_list = (CREATE ONLY task_list SET name = "K-List", owner = $user);
+    LET $new_list = (CREATE ONLY task_list SET name = "K-List", owner = $user, description = "Lista de tareas por defecto");
     RELATE $user->owns->$new_list UNIQUE;
-} 
+};
 
 DELETE owns;
 
