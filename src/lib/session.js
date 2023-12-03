@@ -104,6 +104,20 @@ export async function create_user(user, email, password, first_name, last_name) 
     }
 }
 
+export async function cerrar_sesion() {
+    await db.invalidate();
+    await db.close();
+
+    localStorage.removeItem('token_auth');
+    session.update((old) => {
+        old.email = '';
+        old.first_name = '';
+        old.last_name = '';
+        old.id = '';
+        return old;
+    });
+}
+
 export async function connect(email, password) {
 
     try {
