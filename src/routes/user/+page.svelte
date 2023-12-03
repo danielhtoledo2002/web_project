@@ -2,7 +2,7 @@
 <script>
     import NavBar from "../navBar.svelte";
     import { onMount } from "svelte";
-    import { session, connect, update_user, cerrar_sesion } from "$lib/session.js";
+    import { session, connect, update_user, cerrar_sesion, eliminar_cuenta } from "$lib/session.js";
     import { get } from "svelte/store";
 
     let nombre = "";
@@ -20,6 +20,11 @@
             console.log(err);
         }
     });
+
+    async function remove() {
+        await eliminar_cuenta();
+        window.location.href = "/login";
+    }
 
     async function close() {
         await cerrar_sesion();
@@ -83,7 +88,7 @@
             </div>
 
             <div class="mb-3 pt w-full">
-                <button class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">Eliminar cuenta</button>
+                <button class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200" on:click={remove}>Eliminar cuenta</button>
             </div>
         </div>
     </section>

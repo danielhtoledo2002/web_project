@@ -24,7 +24,7 @@ DEFINE TABLE user SCHEMAFULL
     PERMISSIONS
         FOR select FULL
         FOR create, update WHERE id = $auth.id
-        FOR delete NONE
+        FOR delete WHERE id = $auth.id
 ;
 
 DEFINE FIELD id ON user PERMISSIONS 

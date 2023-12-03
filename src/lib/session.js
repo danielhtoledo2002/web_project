@@ -104,6 +104,21 @@ export async function create_user(user, email, password, first_name, last_name) 
     }
 }
 
+export async function eliminar_cuenta() {
+    try {
+        let id = get(session).id;
+        await db.delete(id);
+        await cerrar_sesion();
+
+        console.log('Deleted user');
+
+        return true;
+    } catch (e) {
+        console.error('ERROR', e);
+        return false;
+    }
+}
+
 export async function cerrar_sesion() {
     await db.invalidate();
     await db.close();
