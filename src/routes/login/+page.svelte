@@ -32,7 +32,7 @@
 </div>
 
 <footer class="max-w-lg mx-auto flex justify-center text-white">
-    <a href="#" class="hover:underline">Contact</a>
+    <a href="mailto:ListKlista@gmail.com" class="hover:underline text-[#89CFF3]">Contacto</a>
     <span class="mx-3">•</span>
-    <a href="#" class="hover:underline">Privacy</a>
+    <a href="https://github.com/danielhtoledo2002/web_project" class="hover:underline text-[#89CFF3]">Proyecto</a>
 </footer>

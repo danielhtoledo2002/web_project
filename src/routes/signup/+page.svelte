@@ -35,9 +35,8 @@
 <div class="max-w-lg mx-auto text-center mt-12 mb-6">
     <p class="text-[#00A9FF]">Ya tienes cuenta? <a href="login" class="font-bold hover:underline text-[#00A9FF]">Log In</a>.</p>
 </div>
-
 <footer class="max-w-lg mx-auto flex justify-center text-white">
-    <a href="#" class="hover:underline">Contact</a>
+    <a href="mailto:ListKlista@gmail.com" class="hover:underline text-[#89CFF3]">Contacto</a>
     <span class="mx-3">•</span>
-    <a href="#" class="hover:underline">Privacy</a>
+    <a href="https://github.com/danielhtoledo2002/web_project" class="hover:underline text-[#89CFF3]">Proyecto</a>
 </footer>
