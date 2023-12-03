@@ -1,7 +1,7 @@
 <main class="bg-[#A0E9FF] flex flex-col justify-center items-center shadow-2xl flex-grow flex-wrap">
     <nav class="flex items-center justify-between w-full p-4 flex-wrap">
       <div class="flex items-center text-black flex-wrap">
-        <a href="./" class="flex">
+        <a href="./listas" class="flex">
           <h1 class="font-bold text-[#FFF]">
             <i class="fa-solid fa-cloud"></i>
           </h1>

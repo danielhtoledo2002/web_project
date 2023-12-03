@@ -8,7 +8,7 @@ DEFINE SCOPE account SESSION 24h
             last_name=$last_name
     )
     SIGNIN (
-        SELECT * FROM user WHERE email = $email AND pass = crypto::argon2::verify($pass, pass)
+        SELECT * FROM user WHERE email = $email AND pass = crypto::argon2::compare($pass, pass)
     )
 ;
 
