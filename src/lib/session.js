@@ -114,8 +114,6 @@ export async function connect(email, password) {
             await db.authenticate(localStorage.getItem('token_auth'));
             const usuario = await db.info();
 
-            
-
             console.log('Connected to SurrealDB with token');
             console.log('User: ', usuario.email);
 
@@ -133,8 +131,11 @@ export async function connect(email, password) {
         } else {
             let token = await db.signin({
                 scope: 'account',
-                email: email,
-                pass: password,
+                namespace: 'test',
+                database: 'test',
+
+                username: email,
+                password: password,
             });
             localStorage.setItem('token_auth', token);
     
