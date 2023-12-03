@@ -1,63 +1,23 @@
 <script>
-    import { Surreal } from 'surrealdb.js';
-    const db = new Surreal();
-    import NavBar from './navBar.svelte'
+    import { onMount } from 'svelte';
+    import { db } from '$lib/session.js';
+    import NavBar from './navBar.svelte';
+    import { connect } from '$lib/session.js';
 
-    async function connect() {
+    onMount(async () => {
         try {
-            // Connect to the database
-            await db.connect('http://127.0.0.1:8000/rpc', {
-                // Set the namespace and database for the connection
-                namespace: 'test',
-                database: 'test',
-
-                // Set the authentication details for the connection
-                auth: {
-                    namespace: 'test',
-                    database: 'test',
-                    scope: 'account',
-                    email: 'daniel@gmail.com',
-                    pass: '1234',
-                },
-            });
-        } catch (e) {
-            console.error('ERROR', e);
+            let success = await connect("", "");
+            if (!success) {
+                window.location.href = '/login';
+            } else {
+                const res = await db.info();
+                window.location.href = '/listas';
+            }
+        } catch (err) {
+            console.log(err);
+            window.location.href = '/login';
         }
-    }
-
-    async function crear() {
-        try {
-
-            // Create a new person with a random id
-            const created = await db.create('person', {
-                title: 'Founder & CEO',
-                name: {
-                    first: 'Tobie',
-                    last: 'Morgan Hitchcock',
-                },
-                marketing: true,
-                identifier: Math.random().toString(36).substr(2, 10),
-            });
-
-            // Update a person record with a specific id
-            const updated = await db.merge('person:jaime', {
-                marketing: true,
-            });
-
-            // Select all people records
-            const people = await db.select('person');
-
-            // Perform a custom advanced query
-            const groups = await db.query(
-                'SELECT marketing, count() FROM type::table($tb) GROUP BY marketing',
-                {
-                    tb: 'person',
-                }
-            );
-        } catch (e) {
-            console.error('ERROR', e);
-        }
-    }
+    });
 </script>
 
 <div class=" flex flex-row grow">
