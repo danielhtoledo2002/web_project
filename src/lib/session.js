@@ -30,7 +30,7 @@ export async function update_user(email, old_pass, password, first_name, last_na
         }
 
         if (password != "") {   
-            await db.query("UPDATE $id SET pass = $pass", {
+            await db.query("UPDATE $id SET pass = crypto::argon2::generate($pass)", {
                 id: id,
                 pass: password,
             });
