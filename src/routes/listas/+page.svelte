@@ -52,6 +52,6 @@
 
 
 <div class=" grid grid-cols-4  flew-wrape  justify-center gap-4 p-6">
-    <List />
+    <List nombre={"Nombre"} id={"Id"}/>
 
 </div>
