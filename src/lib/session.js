@@ -17,7 +17,7 @@ export async function usedb() {
 }
 
 export async function update_user(email, password, first_name, last_name) {
-    
+    try {
         // Connect to the databasex
         await usedb();
         await connect("", "");
@@ -62,7 +62,10 @@ export async function update_user(email, password, first_name, last_name) {
         console.log('User: ', usuario.email);
 
         return true;
-    
+    } catch (e) {
+        console.error('ERROR', e);
+        return false;
+    }
 }
 
 export async function create_user(user, email, password, first_name, last_name) {

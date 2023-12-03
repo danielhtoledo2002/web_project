@@ -14,7 +14,7 @@
         if (!success) {
             window.location.href = "/login";
         }
-        
+
         try {
             let session_info = get(session);
             nombre = session_info.first_name;
@@ -44,7 +44,7 @@
         let success = await update_user(email, new_pass, first_name, last_name);
 
         if (!success) {
-            alert("Contraseña incorrecta");
+            alert("Fallo al actualizar datos. Verifique que el correo no este en uso");
             return;
         } else {
             window.location.href = "/user";
