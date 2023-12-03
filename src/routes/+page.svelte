@@ -20,7 +20,4 @@
     });
 </script>
 
-<div class=" flex flex-row grow">
-    <NavBar/>
-</div>
 

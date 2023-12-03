@@ -1,3 +1,8 @@
+<script>
+  export let nombre = "";
+  export let apellido = "";
+</script>
+
 <main class="bg-[#A0E9FF] flex flex-col justify-center items-center shadow-2xl flex-grow flex-wrap">
     <nav class="flex items-center justify-between w-full p-4 flex-wrap">
       <div class="flex items-center text-black flex-wrap">
@@ -10,7 +15,8 @@
         
       </div>
       <div class="flex flex-wrap" >
-        <a href="./user">
+        <a href="./user" class="flex">
+            <p class="font-bold text-black pr-3">{nombre} {apellido}</p>
             <h1 class="font-bold text-black"><i class="fa-solid fa-user"></i></h1>
         </a>
       </div>

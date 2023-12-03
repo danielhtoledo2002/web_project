@@ -1,8 +1,11 @@
 <script>
     import { onMount } from 'svelte';
-    import { db } from '$lib/session.js';
     import NavBar from '../navBar.svelte';
-    import { connect } from '$lib/session.js';
+    import { connect, session } from '$lib/session.js';
+    import { get } from 'svelte/store';
+
+    let nombre = "";
+    let apellido = "";
 
     onMount(async () => {
         try {
@@ -10,6 +13,10 @@
             if (!success) {
                 window.location.href = '/login';
             }
+
+            let session_info = get(session);
+            nombre = session_info.first_name;
+            apellido = session_info.last_name;
         } catch (err) {
             console.log(err);
             window.location.href = '/login';
@@ -18,6 +25,6 @@
 </script>
 
 <div class=" flex flex-row grow">
-    <NavBar/>
+    <NavBar nombre={nombre} apellido={apellido}/>
 </div>
 
