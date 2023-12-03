@@ -10,7 +10,11 @@
     let segundo = "";
     
     onMount(async () => {
-        await connect("", "");
+        let success = await connect("", "");
+        if (!success) {
+            window.location.href = "/login";
+        }
+        
         try {
             let session_info = get(session);
             nombre = session_info.first_name;
