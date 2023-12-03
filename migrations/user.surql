@@ -50,3 +50,34 @@ DEFINE INDEX userEmailIndex ON TABLE user COLUMNS email UNIQUE;
 -- La contraseña puede ser actualizada por el usuario pero no vista
 DEFINE FIELD pass ON TABLE user PERMISSIONS FOR select NONE TYPE string;
 
+
+DELETE task_list;
+
+DEFINE TABLE task_list SCHEMAFULL
+    PERMISSIONS
+        FOR select, create, update, delete WHERE owner = $auth.id
+;
+
+DEFINE FIELD id ON TABLE task_list TYPE record(task_list);
+DEFINE FIELD owner ON TABLE task_list TYPE record(user);
+
+-- El nombre de la lista no puede ser nulo
+DEFINE FIELD name ON TABLE task_list TYPE string ASSERT $value != NONE;
+
+-- Cuando se crea un usuario se crea una lista de tareas por defecto llamada "K-List"
+DEFINE EVENT create_degaule_task_list ON user WHEN $event = "CREATE" THEN {
+    LET $user = $after.id;
+    LET $new_list = (CREATE ONLY task_list SET name = "K-List", owner = $user);
+    RELATE $user->owns->$new_list UNIQUE;
+} 
+
+DELETE owns;
+
+DEFINE TABLE owns SCHEMAFULL
+    PERMISSIONS
+        FOR select, create, update, delete WHERE owner = $auth.id
+;
+
+DEFINE FIELD id ON TABLE owns TYPE record(owns);
+DEFINE FIELD in ON TABLE owns TYPE record(user);
+DEFINE FIELD out ON TABLE owns TYPE record(task_list);

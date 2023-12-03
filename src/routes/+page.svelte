@@ -1,8 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { db } from '$lib/session.js';
-    import NavBar from './navBar.svelte';
-    import { connect } from '$lib/session.js';
+    import { db, connect } from '$lib/session.js';
 
     onMount(async () => {
         try {
