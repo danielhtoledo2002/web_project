@@ -1,6 +1,7 @@
 import { writable, get } from 'svelte/store';
 import { Surreal } from 'surrealdb.js';
 
+
 export const db = new Surreal();
 
 export const session = writable({

@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import { session, connect, update_user, cerrar_sesion, eliminar_cuenta } from "$lib/session.js";
     import { get } from "svelte/store";
+    import { goto } from "$app/navigation";
 
     let nombre = "";
     let correo = "";
@@ -12,7 +13,7 @@
     onMount(async () => {
         let success = await connect("", "");
         if (!success) {
-            window.location.href = "/login";
+            goto("/login");
         }
 
         try {
@@ -27,12 +28,12 @@
 
     async function remove() {
         await eliminar_cuenta();
-        window.location.href = "/login";
+        goto("/login")
     }
 
     async function close() {
         await cerrar_sesion();
-        window.location.href = "/login";
+        goto("/login")
     }
 
     async function actualizar() {
@@ -46,9 +47,12 @@
         if (!success) {
             alert("Fallo al actualizar datos. Verifique que el correo no este en uso");
             return;
-        } else {
-            window.location.href = "/user";
-        }
+        } 
+
+        let session_info = get(session);
+        nombre = session_info.first_name;
+        segundo = session_info.last_name;
+        correo = session_info.email;
     }
 </script>
 

@@ -1,5 +1,6 @@
 <script>
     import { db } from '$lib/session.js';
+    import { goto } from '$app/navigation';
 
     export let id = "";
     export let descripcion = "";
@@ -7,7 +8,11 @@
 
    async function deleteList() {
         await db.delete(id);
-        window.location.href = '/listas';
+        goto('/listas');
+    }
+
+    async function gotoList() {
+        goto('/lista/' + id);
     }
 </script>
 
@@ -17,7 +22,7 @@
         <div class="invisible flex space-x-5 text-black text-opacity-50 flex-row group-hover:visible">
             <button class="hover:opacity-70 fa-solid fa-pen-to-square"></button>
             <button class="hover:opacity-70 fa-solid fa-trash" on:click={deleteList}></button>
-            <button class="hover:opacity-70 fa-solid fa-play"></button>
+            <button class="hover:opacity-70 fa-solid fa-play" on:click={gotoList}></button>
         </div>
     </div>
 </div>
