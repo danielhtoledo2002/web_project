@@ -1,7 +1,8 @@
 <script>
     import { onMount } from 'svelte';
     import NavBar from '../navBar.svelte';
-    import { connect, session, db } from '$lib/session.js';
+    import Newtask from '../newtask.svelte';
+    import { connect, session } from '$lib/session.js';
     import { get } from 'svelte/store';
     import List from '../list.svelte';
     import CreateList from '../createList.svelte';
@@ -111,4 +112,7 @@
     </div>
 </div>
 
+<div class=" flex flex-row grow">
+    <Newtask/>
+</div>
 
