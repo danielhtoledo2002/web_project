@@ -90,7 +90,7 @@
         </div>
         {#if creating}
         <div class="absolute inset-0 z-10">
-            <NewTask bind:creating={creating} />
+            <NewTask bind:creating={creating} {id}/>
         </div>
         {/if}
     </div>

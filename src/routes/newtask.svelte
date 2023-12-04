@@ -3,13 +3,35 @@
     
     const priorityOptions = ["Baja", "Mediana", "Alta", "Critica"];
     export let creating;
+    export let id = "";
 
     function closeMenu() {
         creating = !creating;
     }
-    
-    function createTask(){
-        console.log("sirve")
+
+    async function createTask(){
+        let name = document.getElementById("name").value;
+        let description = document.getElementById("description").value;
+        let dueDate = document.getElementById("dueDate").value;
+
+        var date = new Date(dueDate);
+        let due = date.toISOString();
+
+        if (name === "" || description === "" || dueDate === "") {
+            alert("Por favor llene todos los campos");
+            return;
+        }
+
+        let priority = document.getElementById("priority").value;
+
+        await db.query('CREATE task SET name = $name, description = $description, due_date = $dueDate, completed = false, task_list = $task_list', {
+            name: name,
+            description: description,
+            dueDate: due,
+            task_list: id
+        });
+        
+        window.location.href = '/lista/' + id;
     }
 </script>
     
