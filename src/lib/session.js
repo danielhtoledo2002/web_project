@@ -236,6 +236,8 @@ export async function get_current_user() {
 		return false;
 	}
 
+
+
 	const response = await fetch('/api/user/');
 	const data = await response.json();
 	if (data.error == null) {

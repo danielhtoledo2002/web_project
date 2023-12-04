@@ -21,10 +21,6 @@
             apellido = session_info.last_name;
 
             let listas_usuario = await db.query('SELECT * FROM $auth.id->owns->task_list');
-            
-            console.log(listas_usuario);
-            console.log(listas_usuario[0]);
-
             listas = listas_usuario[0]; 
         } catch (err) {
             console.log(err);
@@ -57,12 +53,11 @@
     </div>
 </div>
 
-
 <div class=" grid grid-cols-4  flew-wrape  justify-center gap-4 p-6">
 
     <!-- Instace of Lista for each json object in listas passing nombre and id -->
     {#each listas as lista}
-        <List nombre={lista.name} id={lista.id}/>
+        <List nombre={lista.name} id={lista.id} descripcion={listas.description}/>
     {/each}
 
 </div>
