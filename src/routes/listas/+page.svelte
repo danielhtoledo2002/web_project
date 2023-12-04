@@ -5,11 +5,17 @@
     import { get } from 'svelte/store';
     import List from '../list.svelte';
     import CreateList from '../createList.svelte';
+    import EditLista from '../editLista.svelte';
 
     let nombre = "";
     let apellido = "";
     let listas = [];
     let creating = false;
+    let editing = false;
+
+    let editing_id = "";
+    let editing_nombre = "";
+    let editing_descripcion = "";
 
     onMount(async () => {
         try {
@@ -50,7 +56,7 @@
     </div>
 
     <div class="relative">
-        <div class={ creating ? 'blur-sm' : '' }>
+        <div class={ creating || editing ? 'blur-sm' : '' }>
             <div class="p-9">
                 <button 
                     on:click={createList}
@@ -70,7 +76,15 @@
     
                 <!-- Instace of Lista for each json object in listas passing nombre and id -->
                 {#each listas as lista}
-                    <List nombre={lista.name} id={lista.id} descripcion={listas.description}/>
+                    <List 
+                        nombre={lista.name} 
+                        id={lista.id} 
+                        descripcion={lista.description}
+                        bind:editing={editing}
+                        bind:editing_id={editing_id}
+                        bind:editing_nombre={editing_nombre}
+                        bind:editing_descripcion={editing_descripcion}
+                    />
                 {/each}
     
             </div>
@@ -80,6 +94,17 @@
         {#if creating}
         <div class="absolute inset-0 z-10">
             <CreateList bind:creating={creating}/>
+        </div>
+        {/if}
+
+        {#if editing}
+        <div class="absolute inset-0 z-10">
+            <EditLista 
+            bind:editing={editing}
+            bind:id={editing_id}
+            bind:nombre={editing_nombre}
+            bind:descripcion={editing_descripcion}
+            />
         </div>
         {/if}
         
