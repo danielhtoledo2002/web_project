@@ -95,3 +95,33 @@ DEFINE TABLE owns SCHEMAFULL
 DEFINE FIELD id ON TABLE owns TYPE record(owns);
 DEFINE FIELD in ON TABLE owns TYPE record(user);
 DEFINE FIELD out ON TABLE owns TYPE record(task_list);
+
+DELETE task;
+
+DEFINE TABLE task SCHEMAFULL
+    PERMISSIONS
+        FOR select, create, update, delete WHERE task_list.owner = $auth.id
+;
+
+DEFINE FIELD id ON TABLE task TYPE record(task);
+DEFINE FIELD task_list ON TABLE task TYPE record(task_list);
+DEFINE FIELD name ON TABLE task TYPE string ASSERT $value != NONE;
+DEFINE FIELD description ON TABLE task TYPE string;
+DEFINE FIELD due_date ON TABLE task TYPE datetime ASSERT $value != NONE;
+DEFINE FIELD completed ON TABLE task TYPE bool DEFAULT false;
+DEFINE FIELD due_date_passed ON TABLE task TYPE bool DEFAULT { due_date < time::now() };
+
+DEFINE EVENT relate_created_task ON task WHEN $event = "CREATE" AND $auth.id = $after.task_list.owner THEN {
+    LET $task_list = $after.task_list;
+    LET $task = $after.id;
+    RELATE $task_list->has_task->$task UNIQUE;
+};
+
+DEFINE TABLE has_task SCHEMAFULL
+    PERMISSIONS
+        FOR create, select, update, delete WHERE out.task_list.owner = $auth.id
+;
+
+DEFINE FIELD id ON TABLE has_task TYPE record(has_task);
+DEFINE FIELD in ON TABLE has_task TYPE record(task_list);
+DEFINE FIELD out ON TABLE has_task TYPE record(task);

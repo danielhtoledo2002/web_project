@@ -8,7 +8,7 @@
 
    async function deleteList() {
         await db.delete(id);
-        goto('/listas');
+        window.location.href = '/listas';
     }
 
     async function gotoList() {
