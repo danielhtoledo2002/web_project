@@ -1,8 +1,11 @@
 <script>
+    import { db } from '$lib/session.js';
+
     export let tarea;
 
-    function deleteTask() {
-        console.log(tarea);
+    async function deleteTask() {
+        await db.delete(tarea.id);
+        window.location.href = '/lista/' + tarea.task_list;
     }
 </script>
 
