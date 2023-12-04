@@ -1,6 +1,9 @@
 <script>
     export let id = "";
+    export let descripcion = "";
     export let nombre = "";
+
+    console.log(id);
 </script>
 
 <div class="flex p-5 bg-[#A0E9FF] rounded-lg text-white-400  space-x-1 justify-center group">

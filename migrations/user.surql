@@ -1,3 +1,5 @@
+DELETE account;
+
 DEFINE SCOPE account SESSION 24h
     SIGNUP (
         CREATE type::thing("user", string::trim($user))
@@ -12,7 +14,6 @@ DEFINE SCOPE account SESSION 24h
     )
 ;
 
-
 DELETE user;
 
 -- Solo los usuarios pueden modificar su información, pero todos pueden ver.
@@ -23,8 +24,7 @@ DELETE user;
 DEFINE TABLE user SCHEMAFULL
     PERMISSIONS
         FOR select FULL
-        FOR create, update WHERE id = $auth.id
-        FOR delete WHERE id = $auth.id
+        FOR delete, create, update WHERE id = $auth.id
 ;
 
 DEFINE FIELD id ON user PERMISSIONS 
@@ -68,15 +68,21 @@ DEFINE FIELD description ON TABLE task_list TYPE string;
 -- Cuando se crea un usuario se crea una lista de tareas por defecto llamada "K-List"
 DEFINE EVENT create_degaule_task_list ON user WHEN $event = "CREATE" THEN {
     LET $user = $after.id;
-    LET $new_list = (CREATE ONLY task_list SET name = "K-List", owner = $user, description = "Lista de tareas por defecto");
-    RELATE $user->owns->$new_list UNIQUE;
+    LET $task_list = (CREATE ONLY task_list SET name = "K-Lista", owner = $user, description = "Lista de tareas por defecto");
+    RELATE $user->owns->$task_list UNIQUE;
+};
+
+DEFINE EVENT relate_created_task_list ON task_list WHEN $event = "CREATE" AND $auth.id = $after.owner THEN {
+    LET $user = $after.owner;
+    LET $task_list = $after.id;
+    RELATE $user->owns->$task_list UNIQUE;
 };
 
 DELETE owns;
 
 DEFINE TABLE owns SCHEMAFULL
     PERMISSIONS
-        FOR select, create, update, delete WHERE owner = $auth.id
+        FOR create, select, update, delete WHERE out.owner = in
 ;
 
 DEFINE FIELD id ON TABLE owns TYPE record(owns);

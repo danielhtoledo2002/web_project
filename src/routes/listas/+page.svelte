@@ -1,13 +1,13 @@
 <script>
     import { onMount } from 'svelte';
     import NavBar from '../navBar.svelte';
-    import { connect, session } from '$lib/session.js';
+    import { connect, session, db } from '$lib/session.js';
     import { get } from 'svelte/store';
     import List from '../list.svelte';
 
     let nombre = "";
     let apellido = "";
-    
+    let listas = [];
 
     onMount(async () => {
         try {
@@ -19,6 +19,13 @@
             let session_info = get(session);
             nombre = session_info.first_name;
             apellido = session_info.last_name;
+
+            let listas_usuario = await db.query('SELECT * FROM $auth.id->owns->task_list');
+            
+            console.log(listas_usuario);
+            console.log(listas_usuario[0]);
+
+            listas = listas_usuario[0]; 
         } catch (err) {
             console.log(err);
             window.location.href = '/login';
@@ -52,6 +59,10 @@
 
 
 <div class=" grid grid-cols-4  flew-wrape  justify-center gap-4 p-6">
-    <List nombre={"Nombre"} id={"Id"}/>
+
+    <!-- Instace of Lista for each json object in listas passing nombre and id -->
+    {#each listas as lista}
+        <List nombre={lista.name} id={lista.id}/>
+    {/each}
 
 </div>
