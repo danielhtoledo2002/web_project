@@ -13,7 +13,7 @@
   }
 </script>
 
-<main class="bg-[#A0E9FF] flex flex-col justify-center items-center shadow-2xl flex-grow flex-wrap">
+<main class="bg-[#A0E9FF] flex flex-col justify-center items-center flex-grow flex-wrap">
     <nav class="flex items-center justify-between w-full p-4 flex-wrap">
       <div class="flex items-center text-black flex-wrap">
         <button class="flex" on:click={gotoListas}>

@@ -23,5 +23,5 @@
             <button class="hover:opacity-70 fa-solid fa-trash" on:click={deleteTask}></button>
         </div>
     </div>
-    <p class="text-sm">Description: {tarea.description}</p>
+    <p class="text-sm">Descripción: {tarea.description}</p>
 </div>

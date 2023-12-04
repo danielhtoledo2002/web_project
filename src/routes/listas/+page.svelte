@@ -53,7 +53,7 @@
                         <i class="fa-solid fa-plus"></i>
                     </div>
                     <div>
-                        Create Task
+                        Crear Lista
                     </div>
                 
                 </button>
