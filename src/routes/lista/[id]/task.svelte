@@ -4,6 +4,13 @@
     export let tarea;
     let tarea_orig = tarea.completed;
 
+    export let editing;
+    export let editing_id;
+    export let editing_nombre;
+    export let editing_descripcion;
+    export let editing_due_date;
+
+
     async function deleteTask() {
         await db.delete(tarea.id);
         window.location.href = '/lista/' + tarea.task_list;
@@ -13,6 +20,14 @@
         await db.merge(tarea.id, { completed: tarea.completed });
         tarea_orig = tarea.completed;
         //window.location.href = '/lista/' + tarea.task_list;
+    }
+
+    function editTask() {
+        editing = !editing;
+        editing_id = tarea.id;
+        editing_nombre = tarea.name;
+        editing_descripcion = tarea.description;
+        editing_due_date = tarea.due_date;
     }
 
     function formatRemaining(rem) {
@@ -43,7 +58,7 @@
                 <p class="font-bold">{tarea.name}</p>
             </div>
             <div class="flex flex-row gap-3">
-                <button class="hover:opacity-70 fa-solid fa-pen-to-square"></button>
+                <button class="hover:opacity-70 fa-solid fa-pen-to-square" on:click={editTask}></button>
                 <button class="hover:opacity-70 fa-solid fa-trash" on:click={deleteTask}></button>
             </div>
         </div>

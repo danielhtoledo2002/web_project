@@ -7,6 +7,7 @@
     import NavBar from '../../navBar.svelte';
     import Task from './task.svelte';
     import NewTask from '../../newtask.svelte';
+    import EditTask from '../../edittask.svelte';
 
     let id = $page.url.pathname.split('/')[2];
     let nombre = "";
@@ -17,6 +18,14 @@
     let segundo = "";
 
     let creating = false;
+
+    let editing = false;
+    let editing_id = "";
+    let editing_nombre = "";
+    let editing_descripcion = "";
+    let editing_due_date = "";
+    
+
 
     function createTask() {
         creating = !creating;
@@ -67,7 +76,7 @@
     <NavBar nombre={nombre_u} apellido={segundo}/>
 
     <div class="relative">
-        <div class={ creating ? 'blur-sm' : '' }>
+        <div class={ creating || editing ? 'blur-sm' : '' }>
             <div class="flex flex-col justify-start gap-2 p-6 w-full">
                 <div class="flex flex-row justify-between w-full items-start">
                     <div class="flex flex-col">
@@ -83,7 +92,13 @@
 
                 <div class="flex flex-col gap-2">
                     {#each tareas as tarea}
-                        <Task {tarea}/>
+                        <Task {tarea} 
+                        bind:editing={editing}
+                        bind:editing_id={editing_id}
+                        bind:editing_nombre={editing_nombre}
+                        bind:editing_descripcion={editing_descripcion}
+                        bind:editing_due_date={editing_due_date}
+                        />
                     {/each}
                 </div>
             </div>
@@ -91,6 +106,18 @@
         {#if creating}
         <div class="absolute inset-0 z-10">
             <NewTask bind:creating={creating} {id}/>
+        </div>
+        {/if}
+        {#if editing}
+        <div class="absolute inset-0 z-10">
+            <EditTask 
+                bind:editing={editing} 
+                bind:id={editing_id} 
+                bind:nombre={editing_nombre} 
+                bind:due_date={editing_due_date} 
+                bind:descripcion={editing_descripcion}
+                task_list={id}
+                />
         </div>
         {/if}
     </div>

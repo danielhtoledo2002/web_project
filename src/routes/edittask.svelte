@@ -4,17 +4,18 @@
     export let id = "";
     export let descripcion = "";
     export let nombre = "";
+    export let due_date = "";
+
+    export let task_list = "";
+
     export let editing = false;
+    
 
     const priorityOptions = ["Baja", "Mediana", "Alta", "Critica"];
 
     async function createTask(){
         let nombre = document.getElementById("name").value;
         let descripcion = document.getElementById("description").value;
-        let dueDate = document.getElementById("dueDate").value;
-
-        var date = new Date(dueDate);
-        let due = date.toISOString();
 
         try {
           if (nombre !== "") {
@@ -29,15 +30,18 @@
             });
           }
 
-         window.location.href = '/listas';
+         window.location.href = '/lista/' + task_list;
         } catch (err) {
             console.log(err);
             window.location.href = '/login';
         }
     }
+
     function closeMenu() {
         editing = !editing;
     }
+
+    
 </script>
     
 <style>
@@ -73,7 +77,7 @@
 <div class="w-full">
     <div class="flex flex-col justify-between mx-auto w-1/3 my-10 bg-white p-6 rounded-lg shadow-inner ">
         <div class="flex justify-between">
-            <h1 class="text-2xl font-bold mb-6">Crear Tarea</h1>
+            <h1 class="text-2xl font-bold mb-6">Editar Tarea</h1>
             <button class="close-button pl-6 h-10" on:click={closeMenu}>
             <i class="fa-solid fa-times"></i>
             </button>
@@ -88,10 +92,12 @@
             <textarea id="description" placeholder={descripcion} required class="border-2 rounded-lg border-[#6bbce3] border-1 "></textarea>
         </div>
 
+        <!--
         <div class="mb-4 flex justify-start">
             <label for="dueDate" class="block text-gray-700 font-bold mb-2 mr-2">Fecha de Entrega:</label>
             <input type="datetime-local" id="dueDate" class="input-field" />
         </div>
+    -->
 
         <div class="mb-4 flex justify-start">
             <label for="priority" class="block text-gray-700 font-bold mb-2 mr-2">Prioridad:</label>
@@ -102,6 +108,6 @@
             </select>
         </div>
 
-        <button class="button" on:click={createTask}>Crear Tarea</button>
+        <button class="button" on:click={createTask}>Editar Tarea</button>
     </div>
 </div>
