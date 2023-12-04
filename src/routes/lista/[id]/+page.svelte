@@ -21,38 +21,43 @@
         creating = !creating;
     }
 
-    document.onkeyup = function(e) {
-        // Set creating to false if the user presses the escape key
-        if (e.key === "Escape") {
-            creating = false;
-        }
-    }
-
     onMount(async () => {
         try {
             let success = await connect("", "");
             if (!success) {
                 goto('/login');
-            } else {
-                let res = await db.select(id);
-                let lista = res[0];
-                nombre = lista.name;
-                descripcion = lista.description;
-
-                let session_info = get(session);
-                nombre_u = session_info.first_name;
-                segundo = session_info.last_name;
-
-                let tareas_lista = await db.query('SELECT *, time::format(due_date - 6h, "%v %r") AS due_date_format, (due_date - time::now()) AS remain FROM $task_list->has_task->task ORDER BY completed, due_date DESC', {
-                    task_list: id
-                });
-
-                let lista_tareas = tareas_lista[0];
-                tareas = lista_tareas;
             }
         } catch (err) {
             console.log(err);
-            //goto('/login');
+            goto('/login');
+        }
+
+        try {
+            let res = await db.select(id);
+            let lista = res[0];
+            nombre = lista.name;
+            descripcion = lista.description;
+
+            let session_info = get(session);
+            nombre_u = session_info.first_name;
+            segundo = session_info.last_name;
+
+            let tareas_lista = await db.query('SELECT *, time::format(due_date - 6h, "%v %r") AS due_date_format, (due_date - time::now()) AS remain FROM $task_list->has_task->task ORDER BY completed, due_date DESC', {
+                task_list: id
+            });
+
+            let lista_tareas = tareas_lista[0];
+            tareas = lista_tareas;
+
+            document.onkeyup = function(e) {
+                // Set creating to false if the user presses the escape key
+                if (e.key === "Escape") {
+                    creating = false;
+                }
+            }
+        } catch (err) {
+            console.log(err);
+            goto('/listas');
         }
     });
 </script>

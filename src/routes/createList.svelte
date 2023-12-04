@@ -19,13 +19,6 @@
         }
     }
 
-    document.onkeyup = function(e) {
-        // Set creating to false if the user presses the escape key
-        if (e.key === "Escape") {
-            creating = false;
-        }
-    }
-
     function closeMenu() {
         creating = !creating;
     }

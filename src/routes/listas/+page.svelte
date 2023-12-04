@@ -24,6 +24,13 @@
 
             let listas_usuario = await db.query('SELECT * FROM $auth.id->owns->task_list');
             listas = listas_usuario[0]; 
+
+            document.onkeyup = function(e) {
+                // Set creating to false if the user presses the escape key
+                if (e.key === "Escape") {
+                    creating = false;
+                }
+            }
         } catch (err) {
             console.log(err);
             window.location.href = '/login';
