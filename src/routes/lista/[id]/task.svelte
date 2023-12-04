@@ -15,6 +15,17 @@
         //window.location.href = '/lista/' + tarea.task_list;
     }
 
+    function formatRemaining(rem) {
+        let remain = rem.split('m')[0] + 'm';
+        remain = remain.replace('m', 'min ');
+        remain = remain.replace('h', 'hr ');
+        remain = remain.replace('d', 'd ');
+        remain = remain.replace('w', 'sem ');
+        remain = remain.replace('mo', 'mes ');
+        remain = remain.replace('y', 'a ');
+        return remain;
+    }
+
     $: if (tarea_orig != tarea.completed) { updateCompleted() };
 </script>
 
@@ -23,7 +34,7 @@
         <div class={ tarea.due_date_passed ? 'flex justify-between flex-row text-sm text-red-500' : 'flex justify-between flex-row text-sm text-black' }>
             <div class="flex flex-row">
                 <input type="checkbox" bind:checked={tarea.completed} class="mr-2 form-checkbox rounded-full border-gray-300 ">
-                <p>{tarea.due_date_passed ? 'Expired' : tarea.remain.split('m')[0] + 'm' }</p>
+                <p>{tarea.due_date_passed ? 'Expired' : formatRemaining(tarea.remain) }</p>
             </div>
             <p>{tarea.due_date_format}</p>
         </div>
