@@ -5,19 +5,20 @@
         name: "",
         description: "",
         dueDate: "",
-        priority: "",
-        assignedList: "",
+        priority: ""
     };
     
-    const priorityOptions = ["Low", "Medium", "High", "Critical"];
-    const listOptions = ["List 1", "List 2", "List 3"]; // Agrega tus propias opciones de lista
+    const priorityOptions = ["Baja", "Mediana", "Alta", "Critica"];
+    export let creating;
 
+    function closeMenu() {
+        creating = !creating;
+    }
     </script>
     
     <style>
     /* Agrega tus estilos aquí */
     .form-container {
-        max-width: 32rem;
         margin: 10rem auto;
         background-color: #fff;
         padding: 1.5rem;
@@ -62,11 +63,11 @@
     }
     </style>
     
-    <main class="form-container">
+    <main class="form-container ">
     <div>
         <div class="flex items-start">
         <h1 class="text-2xl font-bold mb-6">Crear Tarea</h1>
-        <button class="ml-auto" on:click={closeMenu}>
+        <button class="ml-auto" on:click={closeMenu()}>
             <i class="fa-solid fa-times"></i>
         </button>
         </div>
@@ -89,15 +90,6 @@
         <label for="priority" class="block text-gray-700 font-bold mb-2">Prioridad:</label>
         <select id="priority" bind:value={task.priority} class="input-field">
             {#each priorityOptions as option (option)}
-            <option value={option}>{option}</option>
-            {/each}
-        </select>
-        </div>
-    
-        <div class="mb-4">
-        <label for="assignedList" class="block text-gray-700 font-bold mb-2">Lista Asignada:</label>
-        <select id="assignedList" bind:value={task.assignedList} class="input-field">
-            {#each listOptions as option (option)}
             <option value={option}>{option}</option>
             {/each}
         </select>
