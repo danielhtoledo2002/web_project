@@ -5,7 +5,7 @@
     import { get } from 'svelte/store';
     import List from '../list.svelte';
     import CreateList from '../createList.svelte';
-    import EditLista from '../editLista.svelte';
+    import EditLista from '../editlista.svelte';
 
     let nombre = "";
     let apellido = "";
