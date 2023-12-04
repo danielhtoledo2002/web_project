@@ -5,6 +5,7 @@
     import { page } from '$app/stores'
     import { get } from 'svelte/store';
     import NavBar from '../../navBar.svelte';
+    import Task from './task.svelte';
 
     let id = $page.url.pathname.split('/')[2];
     let nombre = "";
@@ -29,10 +30,17 @@
                 let session_info = get(session);
                 nombre_u = session_info.first_name;
                 segundo = session_info.last_name;
+
+                let tareas_lista = await db.query('SELECT * FROM $task_list->has_task->task', {
+                    task_list: id
+                });
+
+                let lista_tareas = tareas_lista[0];
+                tareas = lista_tareas;
             }
         } catch (err) {
             console.log(err);
-            goto('/login');
+            //goto('/login');
         }
     });
 </script>
@@ -42,5 +50,11 @@
     <div class="flex flex-col justify-start gap-2 p-6">
         <h1 class="text-4xl font-bold">{nombre}</h1>
         <p class="text-sm">{descripcion}</p>
+
+        <div class="flex flex-col gap-2">
+            {#each tareas as tarea}
+                <Task {tarea}/>
+            {/each}
+        </div>
     </div>
 </div>
