@@ -1,8 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import NavBar from '../navBar.svelte';
-    import Newtask from '../newtask.svelte';
-    import { connect, session } from '$lib/session.js';
+    import { connect, session, db } from '$lib/session.js';
     import { get } from 'svelte/store';
     import List from '../list.svelte';
     import CreateList from '../createList.svelte';
@@ -24,26 +23,24 @@
             if (!success) {
                 window.location.href = '/login';
             }
-
-            let session_info = get(session);
-            nombre = session_info.first_name;
-            apellido = session_info.last_name;
-
-            let listas_usuario = await db.query('SELECT * FROM $auth.id->owns->task_list');
-            listas = listas_usuario[0]; 
-
-            document.onkeyup = function(e) {
-                // Set creating to false if the user presses the escape key
-                if (e.key === "Escape") {
-                    creating = false;
-                }
-            }
         } catch (err) {
             console.log(err);
             window.location.href = '/login';
         }
 
+        let session_info = get(session);
+        nombre = session_info.first_name;
+        apellido = session_info.last_name;
 
+        let listas_usuario = await db.query('SELECT * FROM $auth.id->owns->task_list');
+        listas = listas_usuario[0]; 
+
+        document.onkeyup = function(e) {
+            // Set creating to false if the user presses the escape key
+            if (e.key === "Escape") {
+                creating = false;
+            }
+        }
     });
 
     function createList() {
@@ -110,9 +107,5 @@
         {/if}
         
     </div>
-</div>
-
-<div class=" flex flex-row grow">
-    <Newtask/>
 </div>
 

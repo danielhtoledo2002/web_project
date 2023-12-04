@@ -6,6 +6,7 @@
     import { get } from 'svelte/store';
     import NavBar from '../../navBar.svelte';
     import Task from './task.svelte';
+    import NewTask from './newtask.svelte';
 
     let id = $page.url.pathname.split('/')[2];
     let nombre = "";
@@ -89,7 +90,7 @@
         </div>
         {#if creating}
         <div class="absolute inset-0 z-10">
-            <p>A</p>
+            <NewTask />
         </div>
         {/if}
     </div>
