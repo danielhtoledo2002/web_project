@@ -15,6 +15,18 @@
     let nombre_u = "";
     let segundo = "";
 
+    let creating = false;
+
+    function createTask() {
+        creating = !creating;
+    }
+
+    document.onkeyup = function(e) {
+        // Set creating to false if the user presses the escape key
+        if (e.key === "Escape") {
+            creating = false;
+        }
+    }
 
     onMount(async () => {
         try {
@@ -47,23 +59,33 @@
 
 <div>
     <NavBar nombre={nombre_u} apellido={segundo}/>
-    <div class="flex flex-col justify-start gap-2 p-6 w-full">
-        <div class="flex flex-row justify-between w-full items-start">
-            <div class="flex flex-col">
-                <h1 class="text-4xl font-bold">{nombre}</h1>
-                <p class="text-sm">{descripcion}</p>
-            </div>
-            <!-- Create task toggle -->
-            <button class="bg-white rounded-xl flex flex-row items-center p-2 gap-2 hover:opacity-70">
-                <i class="fa-solid fa-plus"></i>
-                <p>Crear Tarea</p>
-            </button>
-        </div>
 
-        <div class="flex flex-col gap-2">
-            {#each tareas as tarea}
-                <Task {tarea}/>
-            {/each}
+    <div class="relative">
+        <div class={ creating ? 'blur-sm' : '' }>
+            <div class="flex flex-col justify-start gap-2 p-6 w-full">
+                <div class="flex flex-row justify-between w-full items-start">
+                    <div class="flex flex-col">
+                        <h1 class="text-4xl font-bold">{nombre}</h1>
+                        <p class="text-sm">{descripcion}</p>
+                    </div>
+                    <!-- Create task toggle -->
+                    <button on:click={createTask} class="bg-white rounded-xl flex flex-row items-center p-2 gap-2 hover:opacity-70">
+                        <i class="fa-solid fa-plus"></i>
+                        <p>Crear Tarea</p>
+                    </button>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    {#each tareas as tarea}
+                        <Task {tarea}/>
+                    {/each}
+                </div>
+            </div>
         </div>
+        {#if creating}
+        <div class="absolute inset-0 z-10">
+            <p>A</p>
+        </div>
+        {/if}
     </div>
 </div>
