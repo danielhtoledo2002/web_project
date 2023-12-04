@@ -64,6 +64,7 @@
 </header>
 <main class="bg-[#A0E9FF] max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
     <section>
+        <a href="listas" class="flex justify-end"><i class="fa-solid fa-xmark"></i></a>
         <h3 class="font-bold text-2xl">{nombre} {segundo}</h3>
         <p class="text-gray-600 pt-2">Edita tu Cuenta</p>
     </section>
