@@ -109,7 +109,7 @@ DEFINE FIELD name ON TABLE task TYPE string ASSERT $value != NONE;
 DEFINE FIELD description ON TABLE task TYPE string;
 DEFINE FIELD due_date ON TABLE task TYPE datetime ASSERT $value != NONE;
 DEFINE FIELD completed ON TABLE task TYPE bool DEFAULT false;
-DEFINE FIELD due_date_passed ON TABLE task TYPE bool DEFAULT { due_date < time::now() };
+DEFINE FIELD due_date_passed ON TABLE task DEFAULT <future> { due_date < time::now() };
 
 DEFINE EVENT relate_created_task ON task WHEN $event = "CREATE" AND $auth.id = $after.task_list.owner THEN {
     LET $task_list = $after.task_list;
