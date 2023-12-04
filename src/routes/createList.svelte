@@ -1,5 +1,7 @@
 <script>
     import { db } from '$lib/session.js';
+  
+    export let creating;
 
     async function createList() {
         let nombre = document.getElementById('nombre-tarea').value;
@@ -16,10 +18,27 @@
             window.location.href = '/login';
         }
     }
+
+    document.onkeyup = function(e) {
+        // Set creating to false if the user presses the escape key
+        if (e.key === "Escape") {
+            creating = false;
+        }
+    }
+
+    function closeMenu() {
+        creating = !creating;
+    }
 </script>
 
-<div class="max-w-md mx-auto my-10 bg-white opacity-90 p-6 rounded-lg  shadow-inner">
+<div class="max-w-md mx-auto my-10 bg-white p-6 rounded-lg shadow-inner">
   <div>
+    <div class="flex items-start">
+      <h1 class="text-2xl font-bold mb-6">Crear Lista de Tareas</h1>
+      <button class="ml-auto" on:click={closeMenu}>
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
     <div class="mb-4">
       <label for="nombre-tarea" class="block text-gray-700 font-bold mb-2">Nombre de la tarea:</label>
       <input type="text" id="nombre-tarea" placeholder="Ingrese el nombre de la lista de tareas" required

@@ -38,35 +38,45 @@
 </script>
 
 <div>
-    <div class=" flex flex-row grow">
+    <div class="flex flex-row grow">
         <NavBar nombre={nombre} apellido={apellido}/>
     </div>
 
-    <div class="p-9">
-        <button 
-            on:click={createList}
-            class="p-6 h-12 rounded-lg bg-slate-100 hover:bg-slate-200 flex flex-row w-64 space-x-5 justify-items-center content-center justify-center items-center"
-        >
-            <div>
-                <i class="fa-solid fa-plus"></i>
+    <div class="relative">
+        <div class={ creating ? 'blur-sm' : '' }>
+            <div class="p-9">
+                <button 
+                    on:click={createList}
+                    class="p-6 h-12 rounded-lg bg-slate-100 hover:bg-slate-200 flex flex-row w-64 space-x-5 justify-items-center content-center justify-center items-center"
+                >
+                    <div>
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <div>
+                        Create Task
+                    </div>
+                
+                </button>
             </div>
-            <div>
-                Create Task
+    
+            <div class=" grid grid-cols-4  flew-wrape  justify-center gap-4 p-6">
+    
+                <!-- Instace of Lista for each json object in listas passing nombre and id -->
+                {#each listas as lista}
+                    <List nombre={lista.name} id={lista.id} descripcion={listas.description}/>
+                {/each}
+    
             </div>
+        </div>
         
-        </button>
-    </div>
-
-    <div class=" grid grid-cols-4  flew-wrape  justify-center gap-4 p-6">
-
-        <!-- Instace of Lista for each json object in listas passing nombre and id -->
-        {#each listas as lista}
-            <List nombre={lista.name} id={lista.id} descripcion={listas.description}/>
-        {/each}
-
+        
+        {#if creating}
+        <div class="absolute inset-0 z-10">
+            <CreateList bind:creating={creating}/>
+        </div>
+        {/if}
+        
     </div>
 </div>
 
-{#if creating}
-    <CreateList />
-{/if}
+
