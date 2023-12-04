@@ -7,6 +7,7 @@
     function closeMenu() {
         creating = !creating;
     }
+    
     function createTask(){
         console.log("sirve")
     }
@@ -42,36 +43,38 @@
 }
 </style>
 
-<div class="justify-between mx-auto w-1/3 my-10 bg-white p-6 rounded-lg shadow-inner ">
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-bold mb-6">Crear Tarea</h1>
-        <button class="close-button pl-6 h-10" on:click={closeMenu}>
-        <i class="fa-solid fa-times"></i>
-        </button>
-    </div>
-    <div class="mb-4 flex justify-start">
-        <label for="name" class="block text-gray-700 font-bold mb-2 mr-2">Nombre de la tarea:</label>
-        <input type="text" id="name" class="border-2 rounded-lg border-[#6bbce3]" />
-    </div>
+<div class="w-full">
+    <div class="flex flex-col justify-between mx-auto w-1/3 my-10 bg-white p-6 rounded-lg shadow-inner ">
+        <div class="flex justify-between">
+            <h1 class="text-2xl font-bold mb-6">Crear Tarea</h1>
+            <button class="close-button pl-6 h-10" on:click={closeMenu}>
+            <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        <div class="mb-4 flex flex-row justify-start">
+            <label for="name" class="block text-gray-700 font-bold mb-2 mr-2">Nombre:</label>
+            <input type="text" id="name" class="border-2 rounded-lg border-[#6bbce3]" />
+        </div>
 
-    <div class="mb-4 flex justify-start">
-        <label for="description" class="block text-gray-700 font-bold mb-2 mr-2">Descripción:</label>
-        <textarea id="description" class="border-2 rounded-lg border-[#6bbce3] border-1 "></textarea>
-    </div>
+        <div class="mb-4 flex justify-start">
+            <label for="description" class="block text-gray-700 font-bold mb-2 mr-2">Descripción:</label>
+            <textarea id="description" class="border-2 rounded-lg border-[#6bbce3] border-1 "></textarea>
+        </div>
 
-    <div class="mb-4 flex justify-start">
-        <label for="dueDate" class="block text-gray-700 font-bold mb-2 mr-2">Fecha de Entrega:</label>
-        <input type="datetime-local" id="dueDate" class="input-field" />
-    </div>
+        <div class="mb-4 flex justify-start">
+            <label for="dueDate" class="block text-gray-700 font-bold mb-2 mr-2">Fecha de Entrega:</label>
+            <input type="datetime-local" id="dueDate" class="input-field" />
+        </div>
 
-    <div class="mb-4 flex justify-start">
-        <label for="priority" class="block text-gray-700 font-bold mb-2 mr-2">Prioridad:</label>
-        <select id="priority" class="input-field">
-        {#each priorityOptions as option (option)}
-        <option value={option}>{option}</option>
-        {/each}
-        </select>
-    </div>
+        <div class="mb-4 flex justify-start">
+            <label for="priority" class="block text-gray-700 font-bold mb-2 mr-2">Prioridad:</label>
+            <select id="priority" class="input-field">
+            {#each priorityOptions as option (option)}
+            <option value={option}>{option}</option>
+            {/each}
+            </select>
+        </div>
 
-    <button class="button" on:click={createTask}>Crear Tarea</button>
+        <button class="button" on:click={createTask}>Crear Tarea</button>
+    </div>
 </div>
