@@ -47,9 +47,18 @@
 
 <div>
     <NavBar nombre={nombre_u} apellido={segundo}/>
-    <div class="flex flex-col justify-start gap-2 p-6">
-        <h1 class="text-4xl font-bold">{nombre}</h1>
-        <p class="text-sm">{descripcion}</p>
+    <div class="flex flex-col justify-start gap-2 p-6 w-full">
+        <div class="flex flex-row justify-between w-full items-start">
+            <div class="flex flex-col">
+                <h1 class="text-4xl font-bold">{nombre}</h1>
+                <p class="text-sm">{descripcion}</p>
+            </div>
+            <!-- Create task toggle -->
+            <button class="bg-white rounded-xl flex flex-row items-center p-2 gap-2 hover:opacity-70">
+                <i class="fa-solid fa-plus"></i>
+                <p>Crear Tarea</p>
+            </button>
+        </div>
 
         <div class="flex flex-col gap-2">
             {#each tareas as tarea}
