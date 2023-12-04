@@ -186,6 +186,7 @@ export async function connect(email, password) {
             return true;
         }        
     } catch (e) {
+        localStorage.removeItem('token_auth');
         console.error('ERROR', e);
         return false;
     }

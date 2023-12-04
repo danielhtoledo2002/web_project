@@ -78,6 +78,13 @@ DEFINE EVENT relate_created_task_list ON task_list WHEN $event = "CREATE" AND $a
     RELATE $user->owns->$task_list UNIQUE;
 };
 
+DEFINE EVENT delete_lists_from_deleted_user ON user WHEN $event = "DELETE" THEN {
+    LET $user = $before.id;
+    DELETE $user->owns->task_list;
+    DELETE $user->owns;
+    DELETE task_list WHERE owner = $user;
+};
+
 DELETE owns;
 
 DEFINE TABLE owns SCHEMAFULL
