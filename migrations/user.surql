@@ -59,7 +59,7 @@ DEFINE TABLE task_list SCHEMAFULL
 ;
 
 DEFINE FIELD id ON TABLE task_list TYPE record(task_list);
-DEFINE FIELD owner ON TABLE task_list TYPE record(user);
+DEFINE FIELD owner ON TABLE task_list TYPE record(user) DEFAULT $auth.id;
 
 -- El nombre de la lista no puede ser nulo
 DEFINE FIELD name ON TABLE task_list TYPE string ASSERT $value != NONE;
