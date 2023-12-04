@@ -11,7 +11,8 @@
 
     async function updateCompleted() {
         await db.merge(tarea.id, { completed: tarea.completed });
-        window.location.href = '/lista/' + tarea.task_list;
+        tarea_orig = tarea.completed;
+        //window.location.href = '/lista/' + tarea.task_list;
     }
 
     $: if (tarea_orig != tarea.completed) { updateCompleted() };
