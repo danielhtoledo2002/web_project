@@ -11,7 +11,10 @@
 
 <div class="flex w-full bg-white rounded-xl p-3 flex-col">
     <div class={ tarea.due_date_passed ? 'flex justify-between flex-row text-sm text-red-500' : 'flex justify-between flex-row text-sm text-black' }>
-        <p>{tarea.due_date_passed ? 'Expired' : tarea.remain.split('m')[0] + 'm' }</p>
+        <div class="flex flex-row">
+            <input type="checkbox" class="mr-2 form-checkbox rounded-full border-gray-300 ">
+            <p>{tarea.due_date_passed ? 'Expired' : tarea.remain.split('m')[0] + 'm' }</p>
+        </div>
         <p>{tarea.due_date_format}</p>
     </div>
     <div class="flex flex-row justify-between">

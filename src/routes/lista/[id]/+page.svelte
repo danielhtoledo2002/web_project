@@ -31,7 +31,7 @@
                 nombre_u = session_info.first_name;
                 segundo = session_info.last_name;
 
-                let tareas_lista = await db.query('SELECT *, time::format(due_date + 6h, "%v %r") AS due_date_format, (due_date - time::now()) AS remain FROM $task_list->has_task->task', {
+                let tareas_lista = await db.query('SELECT *, time::format(due_date - 6h, "%v %r") AS due_date_format, (due_date - time::now()) AS remain FROM $task_list->has_task->task ORDER BY completed, due_date DESC', {
                     task_list: id
                 });
 
